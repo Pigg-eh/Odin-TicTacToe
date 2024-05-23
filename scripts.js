@@ -1,29 +1,41 @@
-console.log('Holo Wolo')
-
 let square = 0 //change to function later 
 
-gameBoard()
-function gameBoard () {
+
+const gameGrid = function (square, {x, y}) { 
     let rows = 3; 
     let columns = 3;
-    let board = []
+    let grid = []
 
     for(i=0; i< rows; i++) {
-        board[i] = [];
+        grid[i] = [];
         for (j=0; j<columns; j++){
-            board[i].push(square)
+            grid[i].push('blanko')
         }
     }
 
+    function insertTics(){
+        //array tacs inner array toes
+        grid[x].splice(y, 1, square)
+
+    } 
+    insertTics()
+    helloGrid()  
+
+     function helloGrid(){ //delete later after DOM
+        console.table(grid) 
+    }
+     
+}
+
+gameGrid('test', {x:2,y:1}) //insertion method
+
+function player (){ //store player data
+
+}
+
+function game () { //control flow of game
+    //change value of certain square 
     
-
-console.log(board)
 }
 
-function player (){
-
-}
-
-function game () {
-
-}
+//CHANGE VALUE OF ARRAY

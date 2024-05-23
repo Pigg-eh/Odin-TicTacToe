@@ -13,12 +13,11 @@ const gameGrid = function (square, {x, y}) {
         }
     }
 
-    function insertTics(){
-        //array tacs inner array toes
+    function insertMarkers(){
         grid[x].splice(y, 1, square)
-
     } 
-    insertTics()
+
+    insertMarkers()
     helloGrid()  
 
      function helloGrid(){ //delete later after DOM
@@ -27,15 +26,27 @@ const gameGrid = function (square, {x, y}) {
      
 }
 
-gameGrid('test', {x:2,y:1}) //insertion method
+gameGrid('/EX/', {x:2,y:1}) //insertion method
 
-function player (){ //store player data
+function playerData (){ //store player data
+
+    function createPlayer(name, marker){
+        //ternary operator could be of use for the markers /EX/ /OH/ 
+        // (condition) ? x : y  
+        return{name, marker}
+    }    
+
+    const playerUn = createPlayer('Edukun', 'X')
+    const playerDeux= createPlayer('Jodadiah', 'O')
+    
 
 }
 
-function game () { //control flow of game
+function gameController () { //control flow of game
     //change value of certain square 
-    
+    //object to input x,y value 
+
+
 }
 
 //CHANGE VALUE OF ARRAY

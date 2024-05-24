@@ -1,6 +1,3 @@
-let square = 0 //change to function later 
-
-
 const gameGrid = function (square, {x, y}) { 
     let rows = 3; 
     let columns = 3;
@@ -9,7 +6,7 @@ const gameGrid = function (square, {x, y}) {
     for(i=0; i< rows; i++) {
         grid[i] = [];
         for (j=0; j<columns; j++){
-            grid[i].push('blanko')
+            grid[i].push('') //because empty is equal to false
         }
     }
 
@@ -26,27 +23,39 @@ const gameGrid = function (square, {x, y}) {
      
 }
 
-gameGrid('/EX/', {x:2,y:1}) //insertion method
+function playerData (){ 
 
-function playerData (){ //store player data
-
-    function createPlayer(name, marker){
-        //ternary operator could be of use for the markers /EX/ /OH/ 
-        // (condition) ? x : y  
-        return{name, marker}
-    }    
-
-    const playerUn = createPlayer('Edukun', 'X')
-    const playerDeux= createPlayer('Jodadiah', 'O')
     
 
+     function createPlayer(name, marker){
+        
+        return{name, marker}
+    }    
+   
+    const playerUn = createPlayer('Edukun', 'X')
+    const playerDeux= createPlayer('Jodadiah', 'O')
+
+    return [playerUn, playerDeux]
+
 }
 
-function gameController () { //control flow of game
-    //change value of certain square 
+
+function gameController () { 
+    const playerArray = playerData()
+    console.log(playerArray[0].name) //
+
+    //decide who is the current player
+
+    gameGrid('currentPlayer', {x:2,y:1}) //second bit can take an alert argument for now 
     //object to input x,y value 
 
+    //control flow of game
+        
+
+    
+    //win condition: 
+        //make sure to add if statement checking if false
 
 }
 
-//CHANGE VALUE OF ARRAY
+gameController() //should be the only global call

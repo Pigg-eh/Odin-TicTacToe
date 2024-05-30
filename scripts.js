@@ -1,34 +1,34 @@
-const gameGrid = function (square, {x, y}) { 
-    let rows = 3; 
-    let columns = 3;
-    let grid = []
+let grid = [] 
 
-    for(i=0; i< rows; i++) {
-        grid[i] = [];
-        for (j=0; j<columns; j++){
-            grid[i].push('') //because empty is equal to false
+function gameGrid (currentMarker, x, y) { 
+
+    if (grid.length === 0){for(i=0; i< 3; i++) {
+            grid[i] = [];
+            for (j=0; j< 3; j++){
+                grid[i].push('') 
+            }
         }
     }
-
-    function insertMarkers(){
-        grid[x].splice(y, 1, square)
-    } 
-
-    insertMarkers()
-    helloGrid()  
-
-     function helloGrid(){ //delete later after DOM
-        console.table(grid) 
-    }
-     
-}
-
-function playerData (){ 
-
     
 
+    const insertMarkers = () => {
+        grid[x].splice(y, 1, currentMarker) 
+    } 
+
+
+    const getGrid = () => grid
+    const getGridTest = grid
+
+    const helloGrid =  () => { //delete later after DOM
+        console.table(getGrid()) 
+    }
+
+    return{getGrid, helloGrid, insertMarkers, getGridTest} 
+}
+
+function spaceData (){ 
+
      function createPlayer(name, marker){
-        
         return{name, marker}
     }    
    
@@ -41,13 +41,34 @@ function playerData (){
 
 
 function gameController () { 
-    const playerArray = playerData()
-    console.log(playerArray[0].name) //
+    const playerArray = spaceData()
+    console.log(playerArray[0].marker)
 
-    //decide who is the current player
+    
 
-    gameGrid('currentPlayer', {x:2,y:1}) //second bit can take an alert argument for now 
-    //object to input x,y value 
+
+    let currentPlayer = playerArray[1]
+
+    if (currentPlayer === playerArray[1]) {
+        currentPlayer = playerArray[0]
+    } else {
+        currentPlayer = playerArray[1]
+    }
+
+    placeMarker()
+    function placeMarker(){
+        x = prompt('pick row number')
+        y = prompt('pick column number')
+        const gameState = gameGrid(currentPlayer.marker, x,y) //need to save console.table
+        
+        gameState.insertMarkers()
+        gameState.helloGrid()
+
+        
+    }
+
+
+    
 
     //control flow of game
         
@@ -57,5 +78,5 @@ function gameController () {
         //make sure to add if statement checking if false
 
 }
-
-gameController() //should be the only global call
+// gameController() in console to play game in console for now
+gameController() 

@@ -26,7 +26,7 @@ function gameGrid (currentMarker, x, y) {
     return{getGrid, helloGrid, insertMarkers, getGridTest} 
 }
 
-function spaceData (){ 
+const spaceData=()=>{ 
 
      function createPlayer(name, marker){
         return{name, marker}
@@ -39,22 +39,21 @@ function spaceData (){
 
 }
 
-
+let toggle = true
 function gameController () { 
     const playerArray = spaceData()
-    console.log(playerArray[0].marker)
 
+     
+    toggle = toggle ? false : true;
+    let currentPlayer = (toggle) ? playerArray[0] : playerArray[1]
+
+    // if (currentPlayer === playerArray[1]) { 
+    //     currentPlayer = playerArray[0]
+    // } else if(currentPlayer === playerArray[0]){
+    //     currentPlayer = playerArray[1]
+    // }
+    console.log(`currentplayername:${currentPlayer.name}`)
     
-
-
-    let currentPlayer = playerArray[1]
-
-    if (currentPlayer === playerArray[1]) {
-        currentPlayer = playerArray[0]
-    } else {
-        currentPlayer = playerArray[1]
-    }
-
     placeMarker()
     function placeMarker(){
         x = prompt('pick row number')

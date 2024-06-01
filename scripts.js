@@ -58,24 +58,20 @@ function gameController () {
     function placeMarker(processedPlayer){
         x = prompt('pick row number')
         y = prompt('pick column number')
-        const gameState = gameGrid(processedPlayer, x,y) //need to save console.table
+        const gameState = gameGrid(processedPlayer, x,y) 
         
         gameState.insertMarkers()
-        gameState.helloGrid()
+        // gameState.helloGrid()
 
         
     }
     gameController.placeMarker = placeMarker
-
+    const gameCall = gameGrid() //testy testy
+    gameCall.helloGrid()
     
-
-    //control flow of game
-        
-
-    
-    //win condition: 
-        //make sure to add if statement checking if false
-
 }
+
+//win condition: 
+    //make sure to add if statement checking if false
 // gameController() in console to play game in console for now
 gameController() 

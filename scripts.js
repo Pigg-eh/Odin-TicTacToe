@@ -2,10 +2,13 @@ let grid = []
 
 function gameGrid (processedPlayer, x, y) { 
 
+    
+
     if (grid.length === 0){for(i=0; i< 3; i++) {
             grid[i] = [];
             for (j=0; j< 3; j++){
                 grid[i].push('') 
+
             }
         }
     }
@@ -14,7 +17,7 @@ function gameGrid (processedPlayer, x, y) {
         if(grid[x][y] === ''){
             grid[x].splice(y, 1, processedPlayer.marker)
         } else {
-            alert('wrong input,please try again') //on wrong input helloGrid is being called twice
+            alert('wrong input,please try again') 
             gameController.placeMarker(processedPlayer)
         } 
     } 
@@ -24,7 +27,7 @@ function gameGrid (processedPlayer, x, y) {
     const getGridTest = grid
 
     const helloGrid =  () => { //delete later after DOM
-        console.table(getGrid()) 
+        console.table(getGrid())
     }
 
     return{getGrid, helloGrid, insertMarkers, getGridTest} 
@@ -43,35 +46,49 @@ const spaceData=()=>{
 
 }
 
-let toggle = true
+let toggle=true 
 function gameController () { 
-    const playerArray = spaceData()
 
-     
-    toggle = toggle ? false : true;
-    let currentPlayer = (toggle) ? playerArray[0] : playerArray[1]
-
+   
     
-    console.log(`currentplayername:${currentPlayer.name}`)
     
-    placeMarker(currentPlayer)
-    function placeMarker(processedPlayer){
-        x = prompt('pick row number')
-        y = prompt('pick column number')
-        const gameState = gameGrid(processedPlayer, x,y) 
-        
-        gameState.insertMarkers()
-        // gameState.helloGrid()
+        const playerArray = spaceData()
+        const gameCall = gameGrid() 
+        toggle = !toggle
+        let currentPlayer = (toggle) ? playerArray[0] : playerArray[1]
 
         
-    }
-    gameController.placeMarker = placeMarker
-    const gameCall = gameGrid() //testy testy
-    gameCall.helloGrid()
-    
+        console.log(`currentplayername:${currentPlayer.name}`)
+        
+        placeMarker(currentPlayer)
+        function placeMarker(processedPlayer){
+            x = prompt('pick row number')
+            y = prompt('pick column number')
+            const gameState = gameGrid(processedPlayer, x,y) 
+            
+            gameState.insertMarkers()
+
+        }
+        gameController.placeMarker = placeMarker
+        
+        gameCall.helloGrid()
+
+        
+        winCond(gameCall.getGrid())
+        function winCond(array){
+            let numberedGrid = [0,1,2,3,4,5,6,7,8]
+            winCheck = [].concat(...array);
+            return console.log(winCheck)//delete later
+            //check arrayFlat against numberedGrid with below conditions
+            
+            //[0,1,2][3,4,5][6,7,8]
+            //[0,3,6][1,4,7][2,5,8]
+            //[0,4,8][2,4,6]
+        }
+
 }
 
-//win condition: 
-    //make sure to add if statement checking if false
+
 // gameController() in console to play game in console for now
-gameController() 
+
+gameController()

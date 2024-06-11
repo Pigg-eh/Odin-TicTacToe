@@ -1,6 +1,7 @@
 let grid = [] 
 
-function gameGrid (processedPlayer, x, y) { 
+
+function gameGrid (processedPlayer, x, y) { //turn into IIFE to encapsulate grid
 
     
 
@@ -18,7 +19,8 @@ function gameGrid (processedPlayer, x, y) {
             grid[x].splice(y, 1, processedPlayer.marker)
         } else {
             alert('wrong input,please try again') 
-            gameController.placeMarker(processedPlayer)
+            playGame.placeMarker(processedPlayer)
+            // playGame.winCheck(getGrid)
         } 
     } 
 
@@ -46,12 +48,12 @@ const spaceData=()=>{
 
 }
 
-let toggle=true //encapsulate the gameController function
-function gameController () { 
 
-   
+const gameController = (function(){ 
+
+    let toggle=true 
     
-    
+    function gameController () { 
         const playerArray = spaceData()
         const gameCall = gameGrid() 
         toggle = !toggle
@@ -69,12 +71,12 @@ function gameController () {
             gameState.insertMarkers()
 
         }
-        gameController.placeMarker = placeMarker
-        
+        playGame.placeMarker = placeMarker
         gameCall.helloGrid()
 
-        
+    
         winCheck(gameCall.getGrid())
+        
         function winCheck(array){
 
             const winningIndices = [
@@ -89,8 +91,8 @@ function gameController () {
             ];
             let roundWon = false
             let flatArray = [].concat(...array);
-            console.log(`winCheck: ${flatArray}`)//delete later
-            //check arrayFlat against numberedGrid with below conditions
+            console.log(`winCheck: ${flatArray}`)//delete after DOM
+            
             
             for(i=0; i<=7; i++){
                 const threeInARow = winningIndices[i]
@@ -109,11 +111,18 @@ function gameController () {
                 }
 
             }
-            console.log(roundWon)
+            console.log(roundWon)//delete after DOM
         }
-}
+    }
+
+return {
+    gameController
+};
+})();
+
 
 
 // gameController() in console to play game in console for now
 
-gameController()
+const playGame = gameController.gameController
+playGame()

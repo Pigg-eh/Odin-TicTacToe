@@ -1,39 +1,43 @@
-let grid = [] 
 
 
-function gameGrid (processedPlayer, x, y) { //turn into IIFE to encapsulate grid
+const gameGridCreation = (function(){ 
+    let grid = [] 
+    function gameGrid (processedPlayer, x, y) { 
 
-    
+        
 
-    if (grid.length === 0){for(i=0; i< 3; i++) {
-            grid[i] = [];
-            for (j=0; j< 3; j++){
-                grid[i].push('') 
+        if (grid.length === 0){for(i=0; i< 3; i++) {
+                grid[i] = [];
+                for (j=0; j< 3; j++){
+                    grid[i].push('') 
 
+                }
             }
         }
-    }
 
-    const insertMarkers = () => {
-        if(grid[x][y] === ''){
-            grid[x].splice(y, 1, processedPlayer.marker)
-        } else {
-            alert('wrong input,please try again') 
-            playGame.placeMarker(processedPlayer)
-            // playGame.winCheck(getGrid)
+        const insertMarkers = () => {
+            if(grid[x][y] === ''){
+                grid[x].splice(y, 1, processedPlayer.marker)
+            } else {
+                alert('wrong input,please try again') 
+                playGame.placeMarker(processedPlayer)
+            } 
         } 
-    } 
 
 
-    const getGrid = () => grid
-    const getGridTest = grid
+        const getGrid = () => grid
+        const getGridTest = grid
 
-    const helloGrid =  () => { //delete later after DOM
-        console.table(getGrid())
+        const helloGrid =  () => { //delete later after DOM
+            console.table(getGrid())
+        }
+
+        return{getGrid, helloGrid, insertMarkers, getGridTest} 
     }
-
-    return{getGrid, helloGrid, insertMarkers, getGridTest} 
-}
+ return {
+    gameGrid
+ }
+})();
 
 const spaceData=()=>{ 
 
@@ -52,10 +56,10 @@ const spaceData=()=>{
 const gameController = (function(){ 
 
     let toggle=true 
-    
+    let round = 0
     function gameController () { 
         const playerArray = spaceData()
-        const gameCall = gameGrid() 
+        const gameCall = gameGridCreation.gameGrid() 
         toggle = !toggle
         let currentPlayer = (toggle) ? playerArray[0] : playerArray[1]
 
@@ -66,7 +70,7 @@ const gameController = (function(){
         function placeMarker(processedPlayer){
             x = prompt('pick row number')
             y = prompt('pick column number')
-            const gameState = gameGrid(processedPlayer, x,y) 
+            const gameState = gameGridCreation.gameGrid(processedPlayer, x,y) 
             
             gameState.insertMarkers()
 
@@ -75,9 +79,9 @@ const gameController = (function(){
         gameCall.helloGrid()
 
     
-        winCheck(gameCall.getGrid())
+        winCheck(gameCall.getGrid(),currentPlayer.name)
         
-        function winCheck(array){
+        function winCheck(array,player){
 
             const winningIndices = [
                 [0, 1, 2],
@@ -90,6 +94,8 @@ const gameController = (function(){
                 [2, 4, 6]
             ];
             let roundWon = false
+            let roundTie = false
+            
             let flatArray = [].concat(...array);
             console.log(`winCheck: ${flatArray}`)//delete after DOM
             
@@ -107,11 +113,19 @@ const gameController = (function(){
             
                 if (a === b && b === c) {
                     roundWon = true;
+                    alert(`Player: ${player} Wins`) // winner logic here, find way to grab current player
                     break
                 }
 
             }
-            console.log(roundWon)//delete after DOM
+            round++
+            if(round===9){
+                roundTie = true
+                alert(`IT BE TIE`) //tie logic here
+            }
+            console.log(`roundWon: ${roundWon}`)//delete after DOM
+            console.log(`roundTie: ${roundTie}`)//delete after DOM
+            console.log(`ROUND: ${round}`)
         }
     }
 

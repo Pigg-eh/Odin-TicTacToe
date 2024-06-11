@@ -46,7 +46,7 @@ const spaceData=()=>{
 
 }
 
-let toggle=true 
+let toggle=true //encapsulate the gameController function
 function gameController () { 
 
    
@@ -74,18 +74,43 @@ function gameController () {
         gameCall.helloGrid()
 
         
-        winCond(gameCall.getGrid())
-        function winCond(array){
-            let numberedGrid = [0,1,2,3,4,5,6,7,8]
-            winCheck = [].concat(...array);
-            return console.log(winCheck)//delete later
+        winCheck(gameCall.getGrid())
+        function winCheck(array){
+
+            const winningIndices = [
+                [0, 1, 2],
+                [3, 4, 5],
+                [6, 7, 8],
+                [0, 3, 6],
+                [1, 4, 7],
+                [2, 5, 8],
+                [0, 4, 8],
+                [2, 4, 6]
+            ];
+            let roundWon = false
+            let flatArray = [].concat(...array);
+            console.log(`winCheck: ${flatArray}`)//delete later
             //check arrayFlat against numberedGrid with below conditions
             
-            //[0,1,2][3,4,5][6,7,8]
-            //[0,3,6][1,4,7][2,5,8]
-            //[0,4,8][2,4,6]
-        }
+            for(i=0; i<=7; i++){
+                const threeInARow = winningIndices[i]
 
+                a=flatArray[threeInARow[0]]
+                b=flatArray[threeInARow[1]]
+                c=flatArray[threeInARow[2]]
+
+                if (a === '' || b === '' || c === '') {
+                    continue;
+                }
+            
+                if (a === b && b === c) {
+                    roundWon = true;
+                    break
+                }
+
+            }
+            console.log(roundWon)
+        }
 }
 
 

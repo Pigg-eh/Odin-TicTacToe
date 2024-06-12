@@ -134,9 +134,14 @@ return {
 };
 })();
 
+function handleEvents(){
+    let squares = document.querySelectorAll('div.square')
+    squares.forEach(square => {
+        square.addEventListener('click', playGame)
+    });
+}
 
 
-// gameController() in console to play game in console for now
 
 const playGame = gameController.gameController
-playGame()
+handleEvents()

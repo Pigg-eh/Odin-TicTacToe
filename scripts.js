@@ -1,10 +1,7 @@
-
-
 const gameGridCreation = (function(){ 
     let grid = [] 
     function gameGrid (processedPlayer, x, y) { 
 
-        
 
         if (grid.length === 0){for(i=0; i< 3; i++) {
                 grid[i] = [];
@@ -21,20 +18,18 @@ const gameGridCreation = (function(){
                 
             } else {
                 alert('wrong input,please try again') 
-                // playGame.placeMarker(processedPlayer)
                 playGame()
             } 
         } 
 
 
         const getGrid = () => grid
-        const getGridTest = grid
 
         const helloGrid =  () => { //delete later after DOM
             console.table(getGrid())
         }
 
-        return{getGrid, helloGrid, insertMarkers, getGridTest} 
+        return{getGrid, helloGrid, insertMarkers} 
     }
  return {
     gameGrid
@@ -60,13 +55,15 @@ const gameController = (function(){
     let toggle = () => true 
     let round = 0
 
-    function gameController(x,y) { 
+    function gameController(x,y,node) { 
     
         const playerArray = spaceData()
         const gameCall = gameGridCreation.gameGrid() 
         toggle = !toggle
-        let currentPlayer = (toggle) ? playerArray[0] : playerArray[1]
-    
+        let currentPlayer =  (toggle) ? playerArray[0] : playerArray[1]
+        if (node.textContent===''){
+            node.textContent=(currentPlayer.marker)
+        }
         
         console.log(`currentplayername:${currentPlayer.name}`)
         
@@ -78,19 +75,13 @@ const gameController = (function(){
         }
         
         function placeMarker(processedPlayer){
-            //prompts were here
             
             const gameState = gameGridCreation.gameGrid(processedPlayer, x,y) 
             
             gameState.insertMarkers()
             
         }
-        // playGame.placeMarker = placeMarker //delete if nothing wrong
-        
-
-    
-        
-        
+                
         function winCheck(array,player){
             
             const winningIndices = [
@@ -108,7 +99,6 @@ const gameController = (function(){
             let tieBool = (currentValue) => currentValue != ''
             
             let flatArray = [].concat(...array);
-            console.log(`winCheck: ${flatArray}`)//delete after DOM
             
             
             for(i=0; i<=7; i++){
@@ -127,20 +117,15 @@ const gameController = (function(){
                     alert(`Player: ${player} Wins`) // winner logic here, find way to grab current player
                     break
                 }
-
-                
-                
             }
-            if (flatArray.every(tieBool)){
+
+            if (flatArray.every(tieBool) && !roundWon){
                 roundTie = true
                 alert(`IT BE TIE`) //tie logic here
             }
             
             round++
-            // if(round===9){
-            //     roundTie = true
-            //     alert(`IT BE TIE`) //tie logic here
-            // }
+            
             console.log(`roundWon: ${roundWon}`)//delete after DOM
             console.log(`roundTie: ${roundTie}`)//delete after DOM
             console.log(`ROUND: ${round}`)
@@ -152,30 +137,24 @@ return {
 };
 })();
 
-function handleEvents(){
-    
-    
-    function getCoordinates(event){
-        console.log (event.currentTarget.squares.getAttribute('data-coordinates'))
-    }
 
+
+function handleEvents(){
+            
     let squares = document.querySelectorAll('div.square')
     let array=[]
     squares.forEach((square) => {
         square.addEventListener('click', (e) =>{
+            let clickedNode = e.target
             let pulledString = e.target.getAttribute('data-coordinates')
             array = pulledString.split('')
             console.log(array)
-            playGame(array[0],array[1])
+            playGame(array[0],array[1],clickedNode)
+            
+            
         }) 
     });
-
-
-
-    
 }
-
-
 
 const playGame = gameController.gameController
 handleEvents()

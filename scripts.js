@@ -140,46 +140,43 @@ return {
 })();
 
 
+const startGame = (function(){ 
+        function handleEvents(){
+            
+                    
+            let squares = document.querySelectorAll('div.square')
+            let array=[]
+            squares.forEach((square) => {
+                square.addEventListener('click', (e) =>{
+                    let clickedNode = e.target
+                    let pulledString = e.target.getAttribute('data-coordinates')
+                    array = pulledString.split('')
+                    console.log(array)
+                    playGame(array[0],array[1],clickedNode)
+                    
+                    
+                }) 
+            });
 
-const domEvents=()=>{
-    function handleEvents(){
-        
-                
-        let squares = document.querySelectorAll('div.square')
-        let array=[]
-        squares.forEach((square) => {
-            square.addEventListener('click', (e) =>{
-                let clickedNode = e.target
-                let pulledString = e.target.getAttribute('data-coordinates')
-                array = pulledString.split('')
-                console.log(array)
-                playGame(array[0],array[1],clickedNode)
-                
-                
-            }) 
-        });
 
+        }
 
-    }
+        function hideForm(){
+            let form = document.querySelector('form')
+            form.style.visibility = 'hidden'; 
+        } 
 
-    function hideForm(){
-        let form = document.querySelector('form')
-        form.style.visibility = 'hidden'; 
-    } 
+        function showForm(){
+            let form = document.querySelector('form')
+            form.style.visibility = 'visible'; 
+        }
 
-    function showForm(){
-        let form = document.querySelector('form')
-        form.style.visibility = 'visible'; 
-    }
-
-    return {handleEvents,
-            hideForm,
-            showForm}
-}
-
+        return {handleEvents,
+                hideForm,
+                showForm}
+})();
 
 const playGame = gameController.gameController
-const startGame = domEvents()
 
 //names at start
 //start/restart

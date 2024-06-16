@@ -12,17 +12,20 @@
     <div class="container">
 
         <div class="ui">
-            <form action="">
-                <label for="player1">Player 1:</label><br>
-                <input type="text" id="player1" name="player1"><br>
+            <div onsubmit="gameController.changeName(event)" class="form-container">
+                <form action="" method="get">
+                    <label for="player1">Player 1:</label><br>
+                    <input type="text" id="player1" name="player1"><br>
 
-                <label for="player2">Player 2:</label><br>
-                <input type="text" id="player2" name="player2"><br>
+                    <label for="player2">Player 2:</label><br>
+                    <input type="text" id="player2" name="player2"><br>
 
-                <input type="submit" value="Submit Names">
-            </form>
+                    <input type="submit" value="Submit Names" >
+                </form>
+            </div>
             <button class="start" onclick="startGame.handleEvents(), startGame.hideForm()">Start Game</button>
             <button class="restart" onclick="startGame.showForm(), startGame.clearAll()">Restart Game</button>
+            
         </div>
 
         <div class="board">

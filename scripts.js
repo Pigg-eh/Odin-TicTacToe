@@ -47,6 +47,7 @@ const spaceData=()=>{
         return{name, marker}
     }    
    
+
     const playerUn = createPlayer('Player 1', 'X')
     const playerDeux= createPlayer('Player 2', 'O')
 
@@ -59,10 +60,10 @@ const gameController = (function(){
 
     let toggle = () => true 
     let round = 0
-
+    const playerArray = spaceData() //NAMES CHANGE HERE
     function gameController(x,y,node) { 
     
-        const playerArray = spaceData()
+        // const playerArray = spaceData() //NAMES CHANGE HERE
         const gameCall = gameGridCreation.gameGrid() 
         toggle = !toggle
         let currentPlayer =  (toggle) ? playerArray[1] : playerArray[0]
@@ -79,7 +80,7 @@ const gameController = (function(){
             winCheck(gameCall.getGrid(),currentPlayer.name)
             
         }
-        
+
         function placeMarker(processedPlayer){
             
             const gameState = gameGridCreation.gameGrid(processedPlayer, x,y) 
@@ -138,8 +139,27 @@ const gameController = (function(){
         }
     }
 
+    function changeName(event){
+        event.preventDefault()
+        clearName()
+        playerArray[0].name = document.getElementById('player1').value;
+        playerArray[1].name = document.getElementById('player2').value;
+        
+    }
+
+    function clearName(){
+        playerArray[0].name = 'Player 1'
+        playerArray[1].name = 'Player 2'
+        round = 0
+        
+
+    }
+
+
 return {
-    gameController
+    gameController,
+    changeName,
+    clearName
 };
 })();
 
@@ -149,6 +169,7 @@ const startGame = (function(){
             
                     
             let squares = document.querySelectorAll('div.square')
+
             let array=[]
             squares.forEach((square) => {
                 square.addEventListener('click', (e) =>{
@@ -161,8 +182,7 @@ const startGame = (function(){
                     
                 }) 
             });
-
-
+            
         }
 
         function clearDOM(){
@@ -172,18 +192,25 @@ const startGame = (function(){
             });
         }
 
+        
+
         function hideForm(){
             let form = document.querySelector('form')
+            let startBtn= document.querySelector('button.start')
             form.style.visibility = 'hidden'; 
+            startBtn.style.visibility = 'hidden'; 
+            // startBtn.css('display','none')
         } 
 
         function showForm(){
             let form = document.querySelector('form')
+            let startBtn= document.querySelector('button.start')
             form.style.visibility = 'visible'; 
+            startBtn.style.visibility = 'visible'; 
         }
 
         function clearAll(){
-            // spaceData()
+            gameController.clearName()
             clearDOM()
             gameGridCreation.clearGrid()
         }
@@ -196,6 +223,7 @@ const startGame = (function(){
 })();
 
 const playGame = gameController.gameController
+const callGame = gameController
 
 //names at start
 //start/restart

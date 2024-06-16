@@ -32,8 +32,12 @@ const gameGridCreation = (function(){
         return{getGrid, helloGrid, insertMarkers} 
     }
 
+    function clearGrid(){
+        grid = []
+    }
  return {
-    gameGrid
+    gameGrid,
+    clearGrid
  }
 })();
 
@@ -43,8 +47,8 @@ const spaceData=()=>{
         return{name, marker}
     }    
    
-    const playerUn = createPlayer('Edukun', 'X')
-    const playerDeux= createPlayer('Jodadiah', 'O')
+    const playerUn = createPlayer('Player 1', 'X')
+    const playerDeux= createPlayer('Player 2', 'O')
 
     return [playerUn, playerDeux]
 
@@ -61,12 +65,12 @@ const gameController = (function(){
         const playerArray = spaceData()
         const gameCall = gameGridCreation.gameGrid() 
         toggle = !toggle
-        let currentPlayer =  (toggle) ? playerArray[0] : playerArray[1]
+        let currentPlayer =  (toggle) ? playerArray[1] : playerArray[0]
 
         if (node.textContent===''){
             node.textContent=(currentPlayer.marker)
         }
-        
+        // clearGrid()
         console.log(`currentplayername:${currentPlayer.name}`)
         
         if (x!=undefined){
@@ -161,6 +165,13 @@ const startGame = (function(){
 
         }
 
+        function clearDOM(){
+            let squares = document.querySelectorAll('div.square')
+            squares.forEach((square) => {
+                square.textContent=''
+            });
+        }
+
         function hideForm(){
             let form = document.querySelector('form')
             form.style.visibility = 'hidden'; 
@@ -171,9 +182,17 @@ const startGame = (function(){
             form.style.visibility = 'visible'; 
         }
 
+        function clearAll(){
+            // spaceData()
+            clearDOM()
+            gameGridCreation.clearGrid()
+        }
+
         return {handleEvents,
                 hideForm,
-                showForm}
+                showForm,
+                clearAll
+            }
 })();
 
 const playGame = gameController.gameController

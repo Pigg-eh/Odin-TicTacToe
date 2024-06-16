@@ -31,6 +31,7 @@ const gameGridCreation = (function(){
 
         return{getGrid, helloGrid, insertMarkers} 
     }
+
  return {
     gameGrid
  }
@@ -61,6 +62,7 @@ const gameController = (function(){
         const gameCall = gameGridCreation.gameGrid() 
         toggle = !toggle
         let currentPlayer =  (toggle) ? playerArray[0] : playerArray[1]
+
         if (node.textContent===''){
             node.textContent=(currentPlayer.marker)
         }
@@ -139,22 +141,46 @@ return {
 
 
 
-function handleEvents(){
-            
-    let squares = document.querySelectorAll('div.square')
-    let array=[]
-    squares.forEach((square) => {
-        square.addEventListener('click', (e) =>{
-            let clickedNode = e.target
-            let pulledString = e.target.getAttribute('data-coordinates')
-            array = pulledString.split('')
-            console.log(array)
-            playGame(array[0],array[1],clickedNode)
-            
-            
-        }) 
-    });
+const domEvents=()=>{
+    function handleEvents(){
+        
+                
+        let squares = document.querySelectorAll('div.square')
+        let array=[]
+        squares.forEach((square) => {
+            square.addEventListener('click', (e) =>{
+                let clickedNode = e.target
+                let pulledString = e.target.getAttribute('data-coordinates')
+                array = pulledString.split('')
+                console.log(array)
+                playGame(array[0],array[1],clickedNode)
+                
+                
+            }) 
+        });
+
+
+    }
+
+    function hideForm(){
+        let form = document.querySelector('form')
+        form.style.visibility = 'hidden'; 
+    } 
+
+    function showForm(){
+        let form = document.querySelector('form')
+        form.style.visibility = 'visible'; 
+    }
+
+    return {handleEvents,
+            hideForm,
+            showForm}
 }
 
+
 const playGame = gameController.gameController
-handleEvents()
+const startGame = domEvents()
+
+//names at start
+//start/restart
+//end results

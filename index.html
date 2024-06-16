@@ -9,17 +9,37 @@
 </head>
 <body>
 
-    <div class="board">
+    <div class="container">
 
-        <div class="square" data-coordinates="00"></div>
-        <div class="square" data-coordinates="01"></div>
-        <div class="square" data-coordinates="02"></div>
-        <div class="square" data-coordinates="10"></div>
-        <div class="square" data-coordinates="11"></div>
-        <div class="square" data-coordinates="12"></div>
-        <div class="square" data-coordinates="20"></div>
-        <div class="square" data-coordinates="21"></div>
-        <div class="square" data-coordinates="22"></div>
+        <div class="ui">
+            <form action="">
+                <label for="player1">Player 1:</label><br>
+                <input type="text" id="player1" name="player1"><br>
+
+                <label for="player2">Player 2:</label><br>
+                <input type="text" id="player2" name="player2"><br>
+
+                <input type="submit" value="Submit Names">
+            </form>
+            <button class="start" onclick="startGame.handleEvents(), startGame.hideForm()">Start Game</button>
+            <button class="restart" onclick="startGame.showForm()">Restart Game</button>
+        </div>
+
+        <div class="board">
+            <div class="square" data-coordinates="00"></div>
+            <div class="square" data-coordinates="01"></div>
+            <div class="square" data-coordinates="02"></div>
+            <div class="square" data-coordinates="10"></div>
+            <div class="square" data-coordinates="11"></div>
+            <div class="square" data-coordinates="12"></div>
+            <div class="square" data-coordinates="20"></div>
+            <div class="square" data-coordinates="21"></div>
+            <div class="square" data-coordinates="22"></div>
+        </div>
+        
+        <div class="end-results">test</div>
     </div>
+
+
 </body>
 </html>

@@ -1,14 +1,51 @@
-body {
-    background-image: linear-gradient(black, grey) 
+:root{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-.board {
+
+body, html{
+    /* display: flex; */
+  
+    margin: 0px;
+    padding: 0px;
+}
+
+
+
+.container {
     display: grid;
-    justify-content: center;
-    grid: 300px 300px 300px/ 300px 300px 300px 
+    grid-template-columns: 25vw 50vw 25vw; 
+    height: auto;
+    background-image: linear-gradient(black, grey);
 }
 
-.square {
-    background-color: pink;
-    border: 3px solid black;
-}
+    .ui{
+        height: auto;
+        /* background-color: red; */
+        padding: 3vh;
+    }
+
+        form {
+            color: white;
+        }
+
+    .board {
+        display: grid;
+        height: auto;
+        width: 100vw;
+        grid: 33vh 33vh 33vh / 33vh 33vh 33vh 
+    }
+
+        .square {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: pink;
+            border: 3px solid black;
+            font-size:180px;
+            size: 100vh;
+        }
+
+    .end-results{
+        padding: 3vh;
+    }

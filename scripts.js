@@ -2,7 +2,6 @@ const gameGridCreation = (function(){
     let grid = [] 
     function gameGrid (processedPlayer, x, y) { 
 
-
         if (grid.length === 0){for(i=0; i< 3; i++) {
                 grid[i] = [];
                 for (j=0; j< 3; j++){
@@ -13,8 +12,7 @@ const gameGridCreation = (function(){
         }
 
         const insertMarkers = () => {
-            
-       
+                   
             if(grid[x][y] === ''){
                 grid[x].splice(y, 1, processedPlayer.marker)
                 
@@ -24,14 +22,9 @@ const gameGridCreation = (function(){
             } 
         } 
     
-
         const getGrid = () => grid
-
-        const helloGrid =  () => { //delete later after DOM
-            console.table(getGrid())
-        }
-
-        return{getGrid, helloGrid, insertMarkers} 
+   
+        return{getGrid, insertMarkers} 
     }
 
     function clearGrid(){
@@ -49,14 +42,12 @@ const spaceData=()=>{
         return{name, marker}
     }    
    
-
     const playerUn = createPlayer('Player 1', 'X')
     const playerDeux= createPlayer('Player 2', 'O')
 
     return [playerUn, playerDeux]
 
 }
-
 
 const gameController = (function(){ 
 
@@ -67,22 +58,18 @@ const gameController = (function(){
         const message = document.querySelector('div.message')
         const gameCall = gameGridCreation.gameGrid() 
         toggle = !toggle
-
-        
+     
         let currentPlayer =  (toggle) ? playerArray[1] : playerArray[0]
         let playerTurn =  (!toggle) ? playerArray[1] : playerArray[0]
 
-        if (node.textContent===''&&currentPlayer.marker!=undefined){ //HERE
+        if (node.textContent===''&&currentPlayer.marker!=undefined){ 
             node.textContent=(currentPlayer.marker)
             message.textContent=`${playerTurn.name}'s turn`
 
         }
 
-        console.log(`currentplayername:${currentPlayer.name}`)//delete after message fix
-        
         if (x!=undefined){
             placeMarker(currentPlayer)
-            gameCall.helloGrid()
             winCheck(gameCall.getGrid(),currentPlayer.name)
             
         }
@@ -135,12 +122,9 @@ const gameController = (function(){
             if (flatArray.every(tieBool) && !roundWon){
                 roundTie = true
                 tieMessage()
-                alert(`IT BE TIE`) //tie logic here
             }
             
             round++
-            
-            
             console.log(`ROUND: ${round}`)
 
             function winningMessage(){
@@ -166,6 +150,7 @@ const gameController = (function(){
         clearName()
         playerArray[0].name = document.getElementById('player1').value;
         playerArray[1].name = document.getElementById('player2').value;
+
                 
     }
 
@@ -177,7 +162,6 @@ const gameController = (function(){
 
     }
 
-
 return {
     gameController,
     changeName,
@@ -188,13 +172,11 @@ return {
  
 const startGame = (function(){ 
         let eventBool = false
+        
         function handleEvents(){
             
                     
             let squares = document.querySelectorAll('div.square')
-            
-            
-
             let array=[]
 
             if(eventBool!=true){
@@ -212,8 +194,6 @@ const startGame = (function(){
             }
         }
 
-
-
         function clearDOM(){
             let squares = document.querySelectorAll('div.square')
             squares.forEach((square) => {
@@ -221,8 +201,6 @@ const startGame = (function(){
                 square.textContent=''
             });
         }
-
-        
 
         function hideForm(){
             let form = document.querySelector('form')
@@ -252,16 +230,13 @@ const startGame = (function(){
             squares.forEach((square) => {
                 square.replaceWith(square.cloneNode(true));
             });
-
-            
         }
 
         function initialMessage(){
             
             let message = document.querySelector('div.message')
-            let player = spaceData()
-            console.log(spaceData())//delete after message fixed
-            message.textContent=`|X| ${player[0].name}'s turn`
+            let player = document.getElementById('player1').value;
+            message.textContent=`${player}'s turn`
         }
 
         function clearMessage(){

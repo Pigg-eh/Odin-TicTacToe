@@ -1,5 +1,3 @@
-
-
 const gameGridCreation = (function(){ 
     let grid = [] 
     function gameGrid (processedPlayer, x, y) { 
@@ -66,16 +64,21 @@ const gameController = (function(){
     let round = 0
     const playerArray = spaceData() 
     function gameController(x,y,node) { 
-    
+        const message = document.querySelector('div.message')
         const gameCall = gameGridCreation.gameGrid() 
         toggle = !toggle
+
+        
         let currentPlayer =  (toggle) ? playerArray[1] : playerArray[0]
+        let playerTurn =  (!toggle) ? playerArray[1] : playerArray[0]
 
         if (node.textContent===''&&currentPlayer.marker!=undefined){ //HERE
             node.textContent=(currentPlayer.marker)
+            message.textContent=`${playerTurn.name}'s turn`
+
         }
-        // clearGrid()
-        console.log(`currentplayername:${currentPlayer.name}`)
+
+        console.log(`currentplayername:${currentPlayer.name}`)//delete after message fix
         
         if (x!=undefined){
             placeMarker(currentPlayer)
@@ -125,7 +128,6 @@ const gameController = (function(){
                 if (a === b && b === c) {
                     roundWon = true;
                     winningMessage()
-                    // alert(`Player: ${player} Wins`) // winner logic here, find way to grab current player
                     break
                 }
             }
@@ -138,8 +140,7 @@ const gameController = (function(){
             
             round++
             
-            console.log(`roundWon: ${roundWon}`)//delete after DOM
-            console.log(`roundTie: ${roundTie}`)//delete after DOM
+            
             console.log(`ROUND: ${round}`)
 
             function winningMessage(){
@@ -165,14 +166,14 @@ const gameController = (function(){
         clearName()
         playerArray[0].name = document.getElementById('player1').value;
         playerArray[1].name = document.getElementById('player2').value;
-        
+                
     }
 
     function clearName(){
         playerArray[0].name = 'Player 1'
         playerArray[1].name = 'Player 2'
         round = 0
-        
+        toggle = true
 
     }
 
@@ -193,7 +194,6 @@ const startGame = (function(){
             let squares = document.querySelectorAll('div.square')
             
             
-            
 
             let array=[]
 
@@ -204,7 +204,6 @@ const startGame = (function(){
                         let clickedNode = e.target
                         let pulledString = e.target.getAttribute('data-coordinates')
                         array = pulledString.split('')
-                        console.log(array)
                         playGame(array[0],array[1],clickedNode)
                         
                         
@@ -257,6 +256,14 @@ const startGame = (function(){
             
         }
 
+        function initialMessage(){
+            
+            let message = document.querySelector('div.message')
+            let player = spaceData()
+            console.log(spaceData())//delete after message fixed
+            message.textContent=`|X| ${player[0].name}'s turn`
+        }
+
         function clearMessage(){
             let message = document.querySelector('div.message')
 
@@ -267,11 +274,9 @@ const startGame = (function(){
                 hideForm,
                 showForm,
                 clearAll,
-                resetDOM
+                resetDOM,
+                initialMessage
             }
 })();
 
 const playGame = gameController.gameController
-
-
-//need game logic to stop after win

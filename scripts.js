@@ -1,3 +1,5 @@
+
+
 const gameGridCreation = (function(){ 
     let grid = [] 
     function gameGrid (processedPlayer, x, y) { 
@@ -13,6 +15,8 @@ const gameGridCreation = (function(){
         }
 
         const insertMarkers = () => {
+            
+       
             if(grid[x][y] === ''){
                 grid[x].splice(y, 1, processedPlayer.marker)
                 
@@ -21,7 +25,7 @@ const gameGridCreation = (function(){
                 playGame()
             } 
         } 
-
+    
 
         const getGrid = () => grid
 
@@ -60,15 +64,14 @@ const gameController = (function(){
 
     let toggle = () => true 
     let round = 0
-    const playerArray = spaceData() //NAMES CHANGE HERE
+    const playerArray = spaceData() 
     function gameController(x,y,node) { 
     
-        // const playerArray = spaceData() //NAMES CHANGE HERE
         const gameCall = gameGridCreation.gameGrid() 
         toggle = !toggle
         let currentPlayer =  (toggle) ? playerArray[1] : playerArray[0]
 
-        if (node.textContent===''){
+        if (node.textContent===''&&currentPlayer.marker!=undefined){ //HERE
             node.textContent=(currentPlayer.marker)
         }
         // clearGrid()
@@ -121,13 +124,15 @@ const gameController = (function(){
             
                 if (a === b && b === c) {
                     roundWon = true;
-                    alert(`Player: ${player} Wins`) // winner logic here, find way to grab current player
+                    winningMessage()
+                    // alert(`Player: ${player} Wins`) // winner logic here, find way to grab current player
                     break
                 }
             }
 
             if (flatArray.every(tieBool) && !roundWon){
                 roundTie = true
+                tieMessage()
                 alert(`IT BE TIE`) //tie logic here
             }
             
@@ -136,6 +141,22 @@ const gameController = (function(){
             console.log(`roundWon: ${roundWon}`)//delete after DOM
             console.log(`roundTie: ${roundTie}`)//delete after DOM
             console.log(`ROUND: ${round}`)
+
+            function winningMessage(){
+                startGame.resetDOM()
+                let div = document.querySelector('div.message')
+
+                div.textContent = `${player} is the person of which we congratulate!`
+
+            }
+
+            function tieMessage(){
+                startGame.resetDOM()
+                let div = document.querySelector('div.message')
+
+                div.textContent = `Let's call it a draw?`
+            }
+
         }
     }
 
@@ -163,31 +184,41 @@ return {
 };
 })();
 
-
+ 
 const startGame = (function(){ 
+        let eventBool = false
         function handleEvents(){
             
                     
             let squares = document.querySelectorAll('div.square')
+            
+            
+            
 
             let array=[]
-            squares.forEach((square) => {
-                square.addEventListener('click', (e) =>{
-                    let clickedNode = e.target
-                    let pulledString = e.target.getAttribute('data-coordinates')
-                    array = pulledString.split('')
-                    console.log(array)
-                    playGame(array[0],array[1],clickedNode)
-                    
-                    
-                }) 
-            });
-            
+
+            if(eventBool!=true){
+                squares.forEach((square) => {
+                    square.addEventListener('click', (e) =>{
+
+                        let clickedNode = e.target
+                        let pulledString = e.target.getAttribute('data-coordinates')
+                        array = pulledString.split('')
+                        console.log(array)
+                        playGame(array[0],array[1],clickedNode)
+                        
+                        
+                    }) 
+                });
+            }
         }
+
+
 
         function clearDOM(){
             let squares = document.querySelectorAll('div.square')
             squares.forEach((square) => {
+                
                 square.textContent=''
             });
         }
@@ -199,7 +230,6 @@ const startGame = (function(){
             let startBtn= document.querySelector('button.start')
             form.style.visibility = 'hidden'; 
             startBtn.style.visibility = 'hidden'; 
-            // startBtn.css('display','none')
         } 
 
         function showForm(){
@@ -213,18 +243,35 @@ const startGame = (function(){
             gameController.clearName()
             clearDOM()
             gameGridCreation.clearGrid()
+            resetDOM()
+            clearMessage()
+        }
+
+        function resetDOM() { 
+            let squares = document.querySelectorAll('div.square')
+
+            squares.forEach((square) => {
+                square.replaceWith(square.cloneNode(true));
+            });
+
+            
+        }
+
+        function clearMessage(){
+            let message = document.querySelector('div.message')
+
+            message.textContent=''
         }
 
         return {handleEvents,
                 hideForm,
                 showForm,
-                clearAll
+                clearAll,
+                resetDOM
             }
 })();
 
 const playGame = gameController.gameController
-const callGame = gameController
 
-//names at start
-//start/restart
-//end results
+
+//need game logic to stop after win
